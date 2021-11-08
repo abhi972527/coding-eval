@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<style>
+    #navbar {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 4%;
+    padding-right: 4%;
+    border: solid 1px black;
+}
+#abc {
+    display: flex;
+    justify-content: space-between;
+}
+#abc h3 {
+    padding-left: 30px;
+    padding-right: 10px;
+}
+img {
+    width: 90%;
+}
+#container {
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    grid-gap: 60px;
+    justify-content: center;
+    padding: 5%;
+}
+</style>
+<body>
+    <div id="navbar">
+        <h3> <a href="#">Menu</a> </h3>
+        <div id="abc">
+            <h3><a href="./signup.html">Sign Up</a></h3>
+            <h3><a href="./login.html">Log In</a></h3>
+            <h3><a href="./cart.html">Cart</a></h3>
+        </div>
+    </div>
+
+    <div id="container">
+        
+    </div>
+
+</body>
+</html>
+<script>
+
+
+    fetch("https://www.themealdb.com/api/json/v1/1/categories.php").then(function (res) {
+
+        return res.json()
+
+        })
+        .then(function (res) {
+        res = res.categories
+        console.log(res);
+        showProducts(res);
+    })
+
+    let container = document.getElementById("container");
+
+    function showProducts(products) {
+
+        products.forEach((product) => {
+        
+
+            let div = document.createElement('div')
+
+            let img = document.createElement('img')
+
+            img.src = product.strCategoryThumb
+
+            let name = document.createElement('p')
+
+            name.innerText = product.strCategory
+
+            let price = document.createElement('p')
+
+            price.innerText = product.idCategory
+
+            let description = document.createElement('p')
+
+            description.innerText = product.strCategoryDescription
+
+            let addtocart_btn = document.createElement("button")
+
+            addtocart_btn.innerText = "Add to cart";
+
+            addtocart_btn.onclick = function () {
+                addtoCart(product);
+            };
+
+            div.append(img, name, price, addtocart_btn, description);
+
+            container.append(div);
+            // console.log(products);
+
+        });        
+
+    }
+
+
+
+    if (localStorage.getItem("cart") === null) {
+        localStorage.setItem("cart", JSON.stringify([]));
+    }
+
+    function addtoCart(p) {
+        // console.log("p:", p);
+        let products_cart = JSON.parse(localStorage.getItem("cart"));
+        
+        products_cart.push(p);
+
+        localStorage.setItem("cart", JSON.stringify(products_cart));
+
+        console.log("products_cart:", products_cart);
+
+    }
+
+    
+
+    
+
+</script>

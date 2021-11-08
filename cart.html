@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+</head>
+<style>
+    #container {
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    grid-gap: 60px;
+    justify-content: center;
+    padding: 5%;
+    }
+
+    img {
+        width: 80%;
+    }
+    #navbar {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 4%;
+        padding-right: 4%;
+        border: solid 1px black;
+    }
+</style>
+<body>
+    <div id="navbar">
+        <h1>Welcome to Cart</h1>
+        <div id="abc">
+            <h3><button onclick="order()">Place order</button></h3>
+            <h3>Total Amount : <span id="amt"></span></h3>
+        </div>
+    </div>
+
+    <div id="container"></div>
+</body>
+</html>
+
+<script>
+
+    let container = document.getElementById("container"); 
+
+    let amt = document.getElementById("amt");
+
+    let amount = 0;
+
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    console.log("cart:", cart);
+
+    function showProducts() {
+
+        cart.forEach((product) => {
+            let div = document.createElement('div')
+
+            let img = document.createElement('img')
+
+            img.src = product.strCategoryThumb
+
+            let name = document.createElement('p')
+
+            name.innerText = product.strCategory
+
+            let amo = product.idCategory
+
+            amount += +amo;
+
+            amt.innerText = amount;
+
+            div.append(img, name);
+
+            container.append(div);
+        });
+    }
+
+    showProducts();
+
+
+    function order() {
+
+        
+        setTimeout(() => { 
+            alert("Your order is accepted"); 
+        }, 0000);
+        
+        setTimeout(() => { 
+            alert("Your order is being cooked"); 
+        }, 3000); 
+        
+        setTimeout(() => { 
+            alert("Your order is ready"); 
+        }, 8000);
+
+        setTimeout(() => { 
+            alert("Order out for delivery"); 
+        }, 10000);
+
+        setTimeout(() => { 
+            alert("Order delivered"); 
+        }, 12000);
+
+    }
+
+
+</script>
